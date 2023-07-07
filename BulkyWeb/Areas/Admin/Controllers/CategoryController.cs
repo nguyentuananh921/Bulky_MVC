@@ -11,8 +11,9 @@ using BulkyBook.Models.Models;
 using BulkyBook.DataAccess.Repository;
 using BulkyBook.DataAccess.Repository.IRepository;
 
-namespace BulkyBook.Web.Controllers
+namespace BulkyBook.Web.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         //private readonly ApplicationDbContext _db;
