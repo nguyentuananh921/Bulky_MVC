@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Bulky.DataAccess.Data.ApplicationDbContext;
-using Bulky.DataAccess.Repository.IRepository;
-using Bulky.DataAccess.Repository;
+using BulkyBook.DataAccess.Data.ApplicationDbContext;
+using BulkyBook.DataAccess.Repository.IRepository;
+using BulkyBook.DataAccess.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

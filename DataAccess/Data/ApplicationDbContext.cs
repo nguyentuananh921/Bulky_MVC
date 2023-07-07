@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Bulky.Models;
-using Bulky.Models.Models;
+using BulkyBook.Models;
+using BulkyBook.Models.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bulky.DataAccess.Data.ApplicationDbContext
+namespace BulkyBook.DataAccess.Data.ApplicationDbContext
 {
     public class ApplicationDbContext : DbContext
     {
