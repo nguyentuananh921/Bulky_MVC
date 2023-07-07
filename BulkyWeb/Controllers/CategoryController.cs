@@ -8,37 +8,42 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bulky.Models.Models;
-
+using Bulky.DataAccess.Repository;
+using Bulky.DataAccess.Repository.IRepository;
 
 namespace BulkyWeb.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        //private readonly ApplicationDbContext _db;
+        public ICategoryRepository _categoryRepo;
 
-        public CategoryController(ApplicationDbContext context)
+        public CategoryController(ICategoryRepository categoryRepo)
         {
-            _db = context;
+            _categoryRepo = categoryRepo;
         }
 
         // GET: Category
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            List<Category> objCategoryList = await _db.Categories.ToListAsync();
-            //return View();
-            return View(objCategoryList);            
+            //List<Category> objCategoryList = await _db.Categories.ToListAsync();
+            List<Category> objCategoryList = _categoryRepo.GetAll().ToList();
+            return View(objCategoryList);
         }
 
         // GET: Category/Details/5
-        public async Task<IActionResult> Details(int? id)
+        //public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await _db.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
+            //var category = await _db.Categories
+            //    .FirstOrDefaultAsync(m => m.Id == id);
+            var category = _categoryRepo.Get(u=>u.Id==id);
             if (category == null)
             {
                 return NotFound();
@@ -59,31 +64,24 @@ namespace BulkyWeb.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public async Task<IActionResult> Create([Bind("Id,Name,DisplayOrder")] Category category)
-        public async Task<IActionResult> Create(Category category)
+        //public async Task<IActionResult> Create(Category category)
+        public IActionResult Create(Category category)
         {
-            //if (category.Name == category.DisplayOrder.ToString())
-            //{
-            //    ModelState.AddModelError("name","The DisplayOrder can't exactly match the Name.");
-            //}
-
-            //if (category.Name.ToLower() == "test")
-            //{
-            //    ModelState.AddModelError("", "Test is an invalid value");
-            //}
             if (ModelState.IsValid)  //It will check validation in the Category Model
             {
-                _db.Add(category);
-                await _db.SaveChangesAsync();  //Save to database
+                _categoryRepo.Add(category);
+                _categoryRepo.Save();  //Save to database
 
                 TempData["success"] = "Category Created successfully";//TempData with the keyname of success
                 //return RedirectToAction(nameof(Index));
-                return RedirectToAction("Index","Category"); //In the same controller no need to specify controller Name
+                return RedirectToAction("Index", "Category"); //In the same controller no need to specify controller Name
             }
             return View(category);
         }
 
         // GET: Category/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        //public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null||id==0)
             {
@@ -91,10 +89,10 @@ namespace BulkyWeb.Controllers
             }
 
             //var categoryFromDb = await _db.Categories.FindAsync(id);
-            Category? categoryFromDb = _db.Categories.Find(id);//Only find with Id
-            Category? categoryFromDb1 = _db.Categories.FirstOrDefault(u => u.Id == id);//Can find by any field
-            Category? categoryFromDb2 = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
-
+            //Category? categoryFromDb = _db.Categories.Find(id);//Only find with Id
+            //Category? categoryFromDb1 = _db.Categories.FirstOrDefault(u => u.Id == id);//Can find by any field
+            //Category? categoryFromDb2 = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
+            var categoryFromDb = _categoryRepo.Get(u=>u.Id==id);
             if (categoryFromDb == null)
             {
                 return NotFound();
@@ -109,47 +107,58 @@ namespace BulkyWeb.Controllers
         [ValidateAntiForgeryToken]
         //public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DisplayOrder")] Category category)
         //public async Task<IActionResult> Edit(Category category)
-        public async Task<IActionResult> Edit(int id, Category category)
+        //public async Task<IActionResult> Edit(int id, Category category)
+        public IActionResult Edit(int id, Category category)
         {
             if (id != category.Id)
             {
                 return NotFound();
             }
 
+            //if (ModelState.IsValid)
+            //{
+            //    try
+            //    {
+            //        _db.Update(category);  //If Id is not exist it will create a new category
+            //        await _db.SaveChangesAsync();
+            //        TempData["success"] = "Category updated successfully";//TempData with the keyname of success
+            //    }
+            //    catch (DbUpdateConcurrencyException)
+            //    {
+            //        if (!CategoryExists(category.Id))
+            //        {
+            //            return NotFound();
+            //        }
+            //        else
+            //        {
+            //            throw;
+            //        }
+            //    }
+            //    return RedirectToAction(nameof(Index));
+            //}
+
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _db.Update(category);  //If Id is not exist it will create a new category
-                    await _db.SaveChangesAsync();
-                    TempData["success"] = "Category updated successfully";//TempData with the keyname of success
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CategoryExists(category.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _categoryRepo.Update(category);
+                _categoryRepo.Save();
+                TempData["success"] = "Category updated successfully";//TempData with the keyname of success                
                 return RedirectToAction(nameof(Index));
             }
             return View(category);
         }
 
         // GET: Category/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        //public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await _db.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
+            //var category = await _db.Categories
+            //    .FirstOrDefaultAsync(m => m.Id == id);
+            var category = _categoryRepo.Get(u=>u.Id==id);
             if (category == null)
             {
                 return NotFound();
@@ -163,23 +172,27 @@ namespace BulkyWeb.Controllers
         [HttpPost, ActionName("Delete")] //Explicit The name of Endpoint
         [ValidateAntiForgeryToken]
         
-        public async Task<IActionResult> DeleteConfirmed(int id) 
+        public IActionResult DeleteConfirmed(int id) 
             
         {
-            var category = await _db.Categories.FindAsync(id);
+            //var category = await _db.Categories.FindAsync(id);
+
+            var category = _categoryRepo.Get(u => u.Id == id);
             if (category != null)
             {
-                _db.Categories.Remove(category);
+                //_db.Categories.Remove(category);
+                _categoryRepo.Remove(category); 
+                _categoryRepo.Save();
             }
 
-            await _db.SaveChangesAsync();
+            //await _db.SaveChangesAsync();
             TempData["success"] = "Category deleted successfully";//TempData with the keyname of success
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoryExists(int id)
-        {
-            return _db.Categories.Any(e => e.Id == id);
-        }
+        //private bool CategoryExists(int id)
+        //{
+        //    return _db.Categories.Any(e => e.Id == id);
+        //}
     }
 }
