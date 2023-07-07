@@ -11,24 +11,25 @@ using BulkyBook.Models.Models;
 using BulkyBook.DataAccess.Repository;
 using BulkyBook.DataAccess.Repository.IRepository;
 
-namespace BulkyBookWeb.Controllers
+namespace BulkyBook.Web.Controllers
 {
     public class CategoryController : Controller
     {
         //private readonly ApplicationDbContext _db;
-        public ICategoryRepository _categoryRepo;
+        //public ICategoryRepository _categoryRepo;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CategoryController(ICategoryRepository categoryRepo)
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _categoryRepo = categoryRepo;
-        }
+                _unitOfWork = unitOfWork;
+        }       
 
         // GET: Category
         //public async Task<IActionResult> Index()
         public IActionResult Index()
         {
             //List<Category> objCategoryList = await _db.Categories.ToListAsync();
-            List<Category> objCategoryList = _categoryRepo.GetAll().ToList();
+            List<Category> objCategoryList = _unitOfWork.CategoryRepository.GetAll().ToList();
             return View(objCategoryList);
         }
 
@@ -43,7 +44,7 @@ namespace BulkyBookWeb.Controllers
 
             //var category = await _db.Categories
             //    .FirstOrDefaultAsync(m => m.Id == id);
-            var category = _categoryRepo.Get(u=>u.Id==id);
+            var category = _unitOfWork.CategoryRepository.Get(u=>u.Id==id);
             if (category == null)
             {
                 return NotFound();
@@ -69,8 +70,8 @@ namespace BulkyBookWeb.Controllers
         {
             if (ModelState.IsValid)  //It will check validation in the Category Model
             {
-                _categoryRepo.Add(category);
-                _categoryRepo.Save();  //Save to database
+                _unitOfWork.CategoryRepository.Add(category);
+                _unitOfWork.Save();  //Save to database
 
                 TempData["success"] = "Category Created successfully";//TempData with the keyname of success
                 //return RedirectToAction(nameof(Index));
@@ -92,7 +93,7 @@ namespace BulkyBookWeb.Controllers
             //Category? categoryFromDb = _db.Categories.Find(id);//Only find with Id
             //Category? categoryFromDb1 = _db.Categories.FirstOrDefault(u => u.Id == id);//Can find by any field
             //Category? categoryFromDb2 = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
-            var categoryFromDb = _categoryRepo.Get(u=>u.Id==id);
+            var categoryFromDb = _unitOfWork.CategoryRepository.Get(u=>u.Id==id);
             if (categoryFromDb == null)
             {
                 return NotFound();
@@ -139,8 +140,8 @@ namespace BulkyBookWeb.Controllers
 
             if (ModelState.IsValid)
             {
-                _categoryRepo.Update(category);
-                _categoryRepo.Save();
+                _unitOfWork.CategoryRepository.Update(category);
+                _unitOfWork.Save();
                 TempData["success"] = "Category updated successfully";//TempData with the keyname of success                
                 return RedirectToAction(nameof(Index));
             }
@@ -158,7 +159,7 @@ namespace BulkyBookWeb.Controllers
 
             //var category = await _db.Categories
             //    .FirstOrDefaultAsync(m => m.Id == id);
-            var category = _categoryRepo.Get(u=>u.Id==id);
+            var category = _unitOfWork.CategoryRepository.Get(u=>u.Id==id);
             if (category == null)
             {
                 return NotFound();
@@ -177,12 +178,12 @@ namespace BulkyBookWeb.Controllers
         {
             //var category = await _db.Categories.FindAsync(id);
 
-            var category = _categoryRepo.Get(u => u.Id == id);
+            var category = _unitOfWork.CategoryRepository.Get(u => u.Id == id);
             if (category != null)
             {
                 //_db.Categories.Remove(category);
-                _categoryRepo.Remove(category); 
-                _categoryRepo.Save();
+                _unitOfWork.CategoryRepository.Remove(category); 
+                _unitOfWork.Save();
             }
 
             //await _db.SaveChangesAsync();
