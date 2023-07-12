@@ -20,13 +20,14 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
         public ProductController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-        }             
+        }
 
         // GET: Product
         //public async Task<IActionResult> Index()
         public IActionResult Index()
-        {            
+        {
             List<Product> objProductList = _unitOfWork.ProductRepository.GetAll().ToList();
+            
             return View(objProductList);
         }
 
@@ -53,6 +54,13 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
         // GET: Product/Create
         public IActionResult Create()
         {
+            IEnumerable<SelectListItem> CategoryList = _unitOfWork.CategoryRepository.GetAll()
+                .Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
+            ViewBag.CateList = CategoryList;
             return View();
         }
 
