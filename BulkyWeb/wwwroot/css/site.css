@@ -1,5 +1,14 @@
-/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
+.divider-text:before,
+.divider-text:after {
+    color: white;
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #555;
+    margin: auto 0.25rem;
+    box-shadow: 0 -2px;
+}
+
+
 
 a.navbar-brand {
     white-space: normal;
@@ -17,24 +26,15 @@ a.navbar-brand {
 
 html {
     font-size: 14px;
-    font-size: 14px;
 }
 
 @media (min-width: 768px) {
     html {
         font-size: 16px;
     }
-
-    html {
-        font-size: 16px;
-    }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-    .border-top
-
-{
+.border-top {
     border-top: 1px solid #e5e5e5;
 }
 
@@ -52,8 +52,6 @@ button.accept-policy {
 }
 
 html {
-    position: relative;
-    min-height: 100%;
     position: relative;
     min-height: 100%;
 }
@@ -197,45 +195,42 @@ bg-success {
     border-color: #134b5f;
 }
 
-body {
-    margin-bottom: 60px;
-}
 
 
-.btn-outline-secondary:hover {
-    color: #fff;
-    background-color: #134b5f;
-    border-color: #134b5f;
-}
+    .btn-outline-secondary:hover {
+        color: #fff;
+        background-color: #134b5f;
+        border-color: #134b5f;
+    }
 
 
 
-.btn-check:focus + .btn-outline-secondary, .btn-outline-secondary:focus {
-    box-shadow: 0 0 0 0.25rem rgba(25, 46, 47, 0.5);
-}
-
-
-
-.btn-check:checked + .btn-outline-secondary,
-.btn-check:active + .btn-outline-secondary, .btn-outline-secondary:active, .btn-outline-secondary.active, .btn-outline-secondary.dropdown-toggle.show {
-    color: #fff;
-    background-color: #134b5f;
-    border-color: #134b5f;
-}
-
-
-
-    .btn-check:checked + .btn-outline-secondary:focus,
-    .btn-check:active + .btn-outline-secondary:focus, .btn-outline-secondary:active:focus, .btn-outline-secondary.active:focus, .btn-outline-secondary.dropdown-toggle.show:focus {
+    .btn-check:focus + .btn-outline-secondary, .btn-outline-secondary:focus {
         box-shadow: 0 0 0 0.25rem rgba(25, 46, 47, 0.5);
     }
 
 
 
-.btn-outline-secondary:disabled, .btn-outline-secondary.disabled {
-    color: #134b5f;
-    background-color: transparent;
-}
+    .btn-check:checked + .btn-outline-secondary,
+    .btn-check:active + .btn-outline-secondary, .btn-outline-secondary:active, .btn-outline-secondary.active, .btn-outline-secondary.dropdown-toggle.show {
+        color: #fff;
+        background-color: #134b5f;
+        border-color: #134b5f;
+    }
+
+
+
+        .btn-check:checked + .btn-outline-secondary:focus,
+        .btn-check:active + .btn-outline-secondary:focus, .btn-outline-secondary:active:focus, .btn-outline-secondary.active:focus, .btn-outline-secondary.dropdown-toggle.show:focus {
+            box-shadow: 0 0 0 0.25rem rgba(25, 46, 47, 0.5);
+        }
+
+
+
+    .btn-outline-secondary:disabled, .btn-outline-secondary.disabled {
+        color: #134b5f;
+        background-color: transparent;
+    }
 
 
 
@@ -313,9 +308,7 @@ body {
     .btn-check:focus + .btn-danger, .btn-danger:focus {
         color: #fff;
         background-color: #d9534f;
-        ;
         border-color: #d9534f;
-        ;
         box-shadow: 0 0 0 0.25rem rgba(223, 109, 105, 0.5);
     }
 
