@@ -55,10 +55,11 @@
                     <input asp-for="Price100" class="form-control b-0 shadow" />
                     <label asp-for="Price100" class="ms-2"> </label>
                     <span asp-validation-for="Price100" class="text-danger"></span>
-                </div>
+                </div>                
 
                 <div class="form-floating py-2 col-12">
-                    <select asp-for="CategoryId" asp-items="ViewBag.CateList" class="form-select b-0 shadow">
+                    @* <select asp-for="CategoryId" asp-items="ViewBag.CateList" class="form-select b-0 shadow"> *@
+                    <select asp-for="CategoryId" asp-items="@(ViewData["ViewDataCateList)"] as IEnumerable<SelectListItem>)" class="form-select b-0 shadow">
                         <option disabled selected>--Select Category</option>
                     </select>
                     <label asp-for="CategoryId" class="ms-2"> </label>
