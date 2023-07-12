@@ -1,4 +1,4 @@
-﻿@model Category
+﻿@model Product
 
 @{
     ViewData["Title"] = "Details";
@@ -7,7 +7,7 @@
     <div class="card-header bg-secondary bg-gradient m-lg-0 py-3">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="text-white py-2"> Detail Category </h2>
+                <h2 class="text-white py-2"> Detail Product </h2>
             </div>
         </div>
     </div>
@@ -15,61 +15,50 @@
         <form method="post" class="row">
             <div class="border p-3">
                 @* <div asp-validation-summary="All"></div> *@
+
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="Name" disabled class="form-control b-0 shadow" />
-                    <label asp-for="Name" class="ms-2"> </label>
+                    <input asp-for="Title" disabled class="form-control b-0 shadow" />
+                    <label asp-for="Title" class="ms-2"> </label>
                 </div>
                 <div class="form-floating py-2 col-12">
-                    <input asp-for="DisplayOrder" disabled class="form-control b-0 shadow" />
-                    <label asp-for="DisplayOrder" class="ms-2"> </label>
+                    <input asp-for="Description" disabled class="form-control b-0 shadow" />
+                    <label asp-for="Description" class="ms-2"> </label>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="ISBN" disabled class="form-control b-0 shadow" />
+                    <label asp-for="ISBN" class="ms-2"> </label>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="Author" disabled class="form-control b-0 shadow" />
+                    <label asp-for="Author" class="ms-2"> </label>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="ListPrice" disabled class="form-control b-0 shadow" />
+                    <label asp-for="ListPrice" class="ms-2"> </label>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="Price" disabled class="form-control b-0 shadow" />
+                    <label asp-for="Price" class="ms-2"> </label>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="Price50" disabled class="form-control b-0 shadow" />
+                    <label asp-for="Price50" class="ms-2"> </label>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="Price100" disabled class="form-control b-0 shadow" />
+                    <label asp-for="Price100" class="ms-2"> </label>
                 </div>
                 <div class="row pt-2 mt-3">
                     <div class="col-6 col-md-3">
-                        <a asp-controller="Category" asp-action="Edit" class="btn btn-outline-primary form-control" asp-route-id="@Model?.Id">Edit</a>
+                        <button type="submit" class="btn btn-danger form-control">Delete</button>
                     </div>
                     <div class="col-6 col-md-3">
-                        <a asp-controller="Category" asp-action="Index" class="btn btn-outline-primary form-control">Back to List</a>
+                        <a asp-controller="Product" asp-action="Index" class="btn btn-outline-primary form-control">Back to List</a>
                     </div>
                 </div>
-            </div>
+            </div>           
 
         </form>
     </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-@* <h1>Details</h1>
-
-<div>
-    <h4>Category</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DisplayOrder)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DisplayOrder)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div> *@
