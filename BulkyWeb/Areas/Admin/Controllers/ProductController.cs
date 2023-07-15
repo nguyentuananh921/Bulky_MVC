@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BulkyBook.Models;
+using BulkyBook.Models.ViewModel;
 using BulkyBook.DataAccess.Data.ApplicationDbContext;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,7 +17,8 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
     [Area("Admin")]
     public class ProductController : Controller
     {        
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;        
+
         public ProductController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -54,15 +56,20 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
         // GET: Product/Create
         public IActionResult Create()
         {
-            IEnumerable<SelectListItem> CategoryList = _unitOfWork.CategoryRepository.GetAll()
-                .Select(u => new SelectListItem
+            //ViewBag.CateList = CategoryList;
+            //ViewData["ViewDataCateList)"] = CategoryList;
+            ProductVM productVM = new()
+            {
+                CategoryList = _unitOfWork.CategoryRepository
+                    .GetAll().Select(u => new SelectListItem
                 {
                     Text = u.Name,
                     Value = u.Id.ToString()
-                });
-            ViewBag.CateList = CategoryList;
-            ViewData["ViewDataCateList)"] = CategoryList;
-            return View();
+                }),
+                Product =new Product()
+            };
+
+            return View(productVM);
         }
 
         // POST: Product/Create
@@ -72,18 +79,18 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         //public async Task<IActionResult> Create([Bind("Id,Name,DisplayOrder")] Product category)
         //public async Task<IActionResult> Create(Product category)
-        public IActionResult Create(Product product)
+        public IActionResult Create(ProductVM obj)
         {
             if (ModelState.IsValid)  //It will check validation in the Product Model
             {
-                _unitOfWork.ProductRepository.Add(product);
+                _unitOfWork.ProductRepository.Add(obj.Product);
                 _unitOfWork.Save();  //Save to database
 
                 TempData["success"] = "Product Created successfully";//TempData with the keyname of success
                 //return RedirectToAction(nameof(Index));
                 return RedirectToAction("Index", "Product"); //In the same controller no need to specify controller Name
             }
-            return View(product);
+            return View(obj);
         }
 
         // GET: Product/Edit/5
