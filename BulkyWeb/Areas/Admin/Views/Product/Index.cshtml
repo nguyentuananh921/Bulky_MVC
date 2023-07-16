@@ -11,7 +11,7 @@
                 <h2 class="text-primary">Product List</h2>
             </div>
             <div class="col-6 text-end">
-                <a asp-area="Admin" asp-controller="Product" asp-action="Create" class="btn btn-primary">
+                <a asp-area="Admin" asp-controller="Product" asp-action="Upsert" class="btn btn-primary">
                     <i class="bi bi-plus-circle"></i> Create New Product
                 </a>
             </div>
@@ -58,7 +58,7 @@
                         </td>
                         <td>
                             <div class="btn-group" role="group">
-                                <a asp-controller="Product" asp-action="Edit" class="btn btn-primary mx-2" asp-route-id="@item.Id">
+                                <a asp-controller="Product" asp-action="Upsert" class="btn btn-primary mx-2" asp-route-id="@item.Id">
                                     <i class="bi bi-pencil-square"></i>Edit
                                 </a>
                                 <a asp-controller="Product" asp-action="Details" class="btn btn-info" asp-route-id="@item.Id">

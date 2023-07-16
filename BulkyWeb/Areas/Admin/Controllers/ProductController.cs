@@ -53,11 +53,9 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
             return View(product);
         }
 
-        // GET: Product/Create
-        public IActionResult Create()
-        {
-            //ViewBag.CateList = CategoryList;
-            //ViewData["ViewDataCateList)"] = CategoryList;
+        // GET: Product/Upsert
+        public IActionResult Upsert(int?id)
+        {            
             ProductVM productVM = new()
             {
                 CategoryList = _unitOfWork.CategoryRepository
@@ -69,70 +67,52 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
                 Product =new Product()
             };
 
-            return View(productVM);
+            if (id == null || id == 0)
+            {
+                //Create
+                return View(productVM);
+            }
+            else
+            {
+                //Update
+                productVM.Product = _unitOfWork.ProductRepository.Get(u => u.Id == id);
+                return View(productVM);
+
+            }
+
+            
         }
 
-        // POST: Product/Create
+        // POST: Product/Upsert
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public async Task<IActionResult> Create([Bind("Id,Name,DisplayOrder")] Product category)
         //public async Task<IActionResult> Create(Product category)
-        public IActionResult Create(ProductVM obj)
+        public IActionResult Upsert(ProductVM productVM,IFormFile? file)
         {
             if (ModelState.IsValid)  //It will check validation in the Product Model
             {
-                _unitOfWork.ProductRepository.Add(obj.Product);
+                _unitOfWork.ProductRepository.Add(productVM.Product);
                 _unitOfWork.Save();  //Save to database
 
                 TempData["success"] = "Product Created successfully";//TempData with the keyname of success
                 //return RedirectToAction(nameof(Index));
                 return RedirectToAction("Index", "Product"); //In the same controller no need to specify controller Name
             }
-            return View(obj);
-        }
-
-        // GET: Product/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        public IActionResult Edit(int? id)
-        {
-            if (id == null||id==0)
+            else
             {
-                return NotFound();
-            }            
-            var productFromDb = _unitOfWork.ProductRepository.Get(u=>u.Id==id);
-            if (productFromDb == null)
-            {
-                return NotFound();
+                productVM.CategoryList = _unitOfWork.CategoryRepository
+                    .GetAll().Select(u => new SelectListItem
+                    {
+                        Text = u.Name,
+                        Value = u.Id.ToString()
+                    });                
+                return View(productVM);
             }
-            return View(productFromDb);
-        }
-
-        // POST: Product/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DisplayOrder")] Product category)
-        //public async Task<IActionResult> Edit(Product category)
-        //public async Task<IActionResult> Edit(int id, Product category)
-        public IActionResult Edit(int id, Product product)
-        {
-            if (id != product.Id)
-            {
-                return NotFound();
-            }           
-
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.ProductRepository.Update(product);
-                _unitOfWork.Save();
-                TempData["success"] = "Product updated successfully";//TempData with the keyname of success                
-                return RedirectToAction(nameof(Index));
-            }
-            return View(product);
-        }
+            
+        }       
 
         // GET: Product/Delete/5
         //public async Task<IActionResult> Delete(int? id)
