@@ -29,9 +29,8 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
         // GET: Product
         //public async Task<IActionResult> Index()
         public IActionResult Index()
-        {
-            List<Product> objProductList = _unitOfWork.ProductRepository.GetAll().ToList();
-            
+        {            
+            List<Product> objProductList = _unitOfWork.ProductRepository.GetAll(includeProperties: "Category").ToList();
             return View(objProductList);
         }
 
