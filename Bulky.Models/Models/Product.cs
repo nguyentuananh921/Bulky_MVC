@@ -44,9 +44,9 @@ namespace BulkyBook.Models.Models
         //Relation to category table
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
-        //[ValidateNever]
+        [ValidateNever]
         public Category Category { get; set; }
-        //[ValidateNever]
+        [ValidateNever]
         public string ImageUrl { get; set; }
     }
 }
