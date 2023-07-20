@@ -16,7 +16,7 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class ProductController : Controller
-    {        
+    {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
@@ -29,7 +29,7 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
         // GET: Product
         //public async Task<IActionResult> Index()
         public IActionResult Index()
-        {            
+        {
             List<Product> objProductList = _unitOfWork.ProductRepository.GetAll(includeProperties: "Category").ToList();
             return View(objProductList);
         }
@@ -45,7 +45,7 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
 
             //var category = await _db.Categories
             //    .FirstOrDefaultAsync(m => m.Id == id);
-            var product = _unitOfWork.ProductRepository.Get(u=>u.Id==id);
+            var product = _unitOfWork.ProductRepository.Get(u => u.Id == id);
             if (product == null)
             {
                 return NotFound();
@@ -55,17 +55,17 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
         }
 
         // GET: Product/Upsert
-        public IActionResult Upsert(int?id)
-        {            
+        public IActionResult Upsert(int? id)
+        {
             ProductVM productVM = new()
             {
                 CategoryList = _unitOfWork.CategoryRepository
                     .GetAll().Select(u => new SelectListItem
-                {
-                    Text = u.Name,
-                    Value = u.Id.ToString()
-                }),
-                Product =new Product()
+                    {
+                        Text = u.Name,
+                        Value = u.Id.ToString()
+                    }),
+                Product = new Product()
             };
 
             if (id == null || id == 0)
@@ -81,7 +81,7 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
 
             }
 
-            
+
         }
 
         // POST: Product/Upsert
@@ -91,17 +91,17 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         //public async Task<IActionResult> Create([Bind("Id,Name,DisplayOrder")] Product category)
         //public async Task<IActionResult> Create(Product category)
-        public IActionResult Upsert(ProductVM productVM,IFormFile? file)
+        public IActionResult Upsert(ProductVM productVM, IFormFile? file)
         {
             //int CheckCategoryId = productVM.Product.CategoryId;
             if (ModelState.IsValid)  //It will check validation in the Product Model
             {
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
-                if (file!=null)
+                if (file != null)
                 {
-                    string filename =Guid.NewGuid().ToString()+Path.GetExtension(file.FileName);
-                    string productPath =Path.Combine(wwwRootPath, @"images\product");
-                    if(string.IsNullOrEmpty(productVM.Product.ImageUrl) ) 
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"images\product");
+                    if (string.IsNullOrEmpty(productVM.Product.ImageUrl))
                     {
                         //Delete old image
                         if (productVM.Product.ImageUrl != null) //Make sure old ImageUrl not null 
@@ -114,7 +114,7 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
                                 System.IO.File.Delete(oldImagePath);
                             }
                         }
-                        
+
                     }
 
                     using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
@@ -131,7 +131,7 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
                 else
                 {
                     _unitOfWork.ProductRepository.Update(productVM.Product);//Update product
-                }                
+                }
                 _unitOfWork.Save();  //Save to database
 
                 TempData["success"] = "Product Created successfully";//TempData with the keyname of success
@@ -145,11 +145,11 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
                     {
                         Text = u.Name,
                         Value = u.Id.ToString()
-                    });                
+                    });
                 return View(productVM);
             }
-            
-        }       
+
+        }
 
         // GET: Product/Delete/5
         //public async Task<IActionResult> Delete(int? id)
@@ -162,7 +162,7 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
 
             //var category = await _db.Categories
             //    .FirstOrDefaultAsync(m => m.Id == id);
-            var category = _unitOfWork.ProductRepository.Get(u=>u.Id==id);
+            var category = _unitOfWork.ProductRepository.Get(u => u.Id == id);
             if (category == null)
             {
                 return NotFound();
@@ -174,9 +174,9 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
         //Can't set the same name for the GET and POST method due to parameter is the same.
         [HttpPost, ActionName("Delete")] //Explicit The name of Endpoint
         [ValidateAntiForgeryToken]
-        
-        public IActionResult DeleteConfirmed(int id) 
-            
+
+        public IActionResult DeleteConfirmed(int id)
+
         {
             //var product = await _db.Categories.FindAsync(id);
 
@@ -184,7 +184,7 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
             if (product != null)
             {
                 //_db.Categories.Remove(category);
-                _unitOfWork.ProductRepository.Remove(product); 
+                _unitOfWork.ProductRepository.Remove(product);
                 _unitOfWork.Save();
             }
 
@@ -203,8 +203,6 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
             return Json(objProductList);
 
         }        
-
-
         #endregion
     }
 }

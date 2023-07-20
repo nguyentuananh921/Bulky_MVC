@@ -14,7 +14,14 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews()
-        .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+    .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+    //.AddJsonOptions(options =>
+    //{
+    //    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+    //}); 
+    ////.AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+
+
 
 var app = builder.Build();
 
