@@ -153,56 +153,86 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
 
         // GET: Product/Delete/5
         //public async Task<IActionResult> Delete(int? id)
-        public IActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //[HttpGet]
+        //public IActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            //var category = await _db.Categories
-            //    .FirstOrDefaultAsync(m => m.Id == id);
-            var category = _unitOfWork.ProductRepository.Get(u => u.Id == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-            return View(category);
-        }
+        //    //var category = await _db.Categories
+        //    //    .FirstOrDefaultAsync(m => m.Id == id);
+        //    var productToDelete = _unitOfWork.ProductRepository.Get(u => u.Id == id);
+        //    if (productToDelete == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(productToDelete);
+        //}
 
         // POST: Product/Delete/5
         //Can't set the same name for the GET and POST method due to parameter is the same.
-        [HttpPost, ActionName("Delete")] //Explicit The name of Endpoint
-        [ValidateAntiForgeryToken]
+        //[HttpPost, ActionName("Delete")] //Explicit The name of Endpoint
+        //[ValidateAntiForgeryToken]
 
-        public IActionResult DeleteConfirmed(int id)
+        //public IActionResult DeleteConfirmed(int id)
 
-        {
-            //var product = await _db.Categories.FindAsync(id);
+        //{
+        //    //var product = await _db.Categories.FindAsync(id);
 
-            var product = _unitOfWork.ProductRepository.Get(u => u.Id == id);
-            if (product != null)
-            {
-                //_db.Categories.Remove(category);
-                _unitOfWork.ProductRepository.Remove(product);
-                _unitOfWork.Save();
-            }
+        //    var product = _unitOfWork.ProductRepository.Get(u => u.Id == id);
+        //    if (product != null)
+        //    {
+        //        //_db.Categories.Remove(category);
+        //        _unitOfWork.ProductRepository.Remove(product);
+        //        _unitOfWork.Save();
+        //    }
 
-            //await _db.SaveChangesAsync();
-            TempData["success"] = "Product deleted successfully";//TempData with the keyname of success
-            return RedirectToAction(nameof(Index));
-        }
+        //    //await _db.SaveChangesAsync();
+        //    TempData["success"] = "Product deleted successfully";//TempData with the keyname of success
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         #region API CALLS
 
         [HttpGet]
-        public IActionResult GetAllProduct()
+        public IActionResult GetAll()
         {
             List<Product> objProductList = _unitOfWork.ProductRepository.GetAll(includeProperties: "Category").ToList();
-            //return Json(new { data = objProductList });
-            return Json(objProductList);
+            return Json(new { data = objProductList });
+            //return Json(objProductList);
 
         }        
+        //[HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+            var productToBeDeleted = _unitOfWork.ProductRepository.Get(u => u.Id == id);
+            if (productToBeDeleted == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
+            string productPath = @"images\products\product-" + id;
+            string finalPath = Path.Combine(_webHostEnvironment.WebRootPath, productPath);
+
+            if (Directory.Exists(finalPath))
+            {
+                string[] filePaths = Directory.GetFiles(finalPath);
+                foreach (string filePath in filePaths)
+                {
+                    System.IO.File.Delete(filePath);
+                }
+
+                Directory.Delete(finalPath);
+            }
+
+
+            _unitOfWork.ProductRepository.Remove(productToBeDeleted);
+            _unitOfWork.Save();
+
+            return Json(new { success = true, message = "Delete Successful" });
+        }
         #endregion
     }
 }
