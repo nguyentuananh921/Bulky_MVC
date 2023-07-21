@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BulkyBook.Models.Models;
 using BulkyBook.Models.Models.Customer;
+using BulkyBook.Models.Models.Product;
 
 using Microsoft.EntityFrameworkCore;
 

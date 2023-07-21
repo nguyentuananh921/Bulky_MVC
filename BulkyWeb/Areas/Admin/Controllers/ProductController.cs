@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BulkyBook.Models;
-using BulkyBook.Models.ViewModel;
-using BulkyBook.DataAccess.Data.ApplicationDbContext;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BulkyBook.Models.Models;
+using BulkyBook.Models.Models.Product;
 using BulkyBook.DataAccess.Repository;
 using BulkyBook.DataAccess.Repository.IRepository;
-
+using BulkyBook.Models;
+using BulkyBook.Models.ViewModel;
+using BulkyBook.DataAccess.Data.ApplicationDbContext;
 namespace BulkyBook.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]

@@ -1,4 +1,6 @@
 ﻿using BulkyBook.Models.Models;
+using BulkyBook.Models.Models.Product;
+
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
