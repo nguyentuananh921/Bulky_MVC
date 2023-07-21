@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace BulkyBook.Models.Models
+namespace BulkyBook.Models.Models.Customer
 {
     //https://codewithmukesh.com/blog/jquery-datatable-in-aspnet-core/
     public class Customer

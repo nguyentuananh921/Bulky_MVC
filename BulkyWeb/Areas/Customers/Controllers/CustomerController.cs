@@ -1,11 +1,11 @@
 ﻿using BulkyBook.DataAccess.Repository.IRepository;
-using BulkyBook.Models.Models;
+using BulkyBook.Models.Models.Customer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BulkyBook.Web.Areas.Customer.Controllers
+namespace BulkyBook.Web.Areas.Customers.Controllers
 {
-    [Area("Customer")]
+    [Area("Customers")]
     public class CustomerController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -14,11 +14,10 @@ namespace BulkyBook.Web.Areas.Customer.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-
         // GET: CustomerController
         public ActionResult Index()
         {
-            List<Customer> objCustomerList = _unitOfWork.CustomerRepository.GetAll().ToList();
+            List<BulkyBook.Models.Models.Customer.Customer> objCustomerList = _unitOfWork.CustomerRepository.GetAll().ToList();
             return View(objCustomerList);
             
         }

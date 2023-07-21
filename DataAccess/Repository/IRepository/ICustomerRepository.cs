@@ -1,4 +1,4 @@
-﻿using BulkyBook.Models.Models;
+﻿using BulkyBook.Models.Models.Customer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
