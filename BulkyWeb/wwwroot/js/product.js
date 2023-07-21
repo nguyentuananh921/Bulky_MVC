@@ -2,6 +2,8 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+var dataTable;
 $(document).ready(function () {
     loadDataTable();
 });
@@ -47,7 +49,7 @@ function Delete(url) {
                     dataTable.ajax.reload();
                     toastr.success(data.message);
                 }
-            })            
+            })
         }
     })
 }

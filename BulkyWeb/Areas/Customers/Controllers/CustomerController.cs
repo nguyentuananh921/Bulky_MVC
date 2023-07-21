@@ -1,4 +1,5 @@
 ﻿using BulkyBook.DataAccess.Repository.IRepository;
+using BulkyBook.Models.Models;
 using BulkyBook.Models.Models.Customer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -90,5 +91,18 @@ namespace BulkyBook.Web.Areas.Customers.Controllers
                 return View();
             }
         }
+
+        #region API CALLS
+
+        [HttpGet]
+        public IActionResult GetCustomers()
+        {
+            List<Customer> objCustomerList = _unitOfWork.CustomerRepository.GetAll().ToList();
+                
+            return Json(new { data = objCustomerList });
+
+        }
+        #endregion
+
     }
 }
