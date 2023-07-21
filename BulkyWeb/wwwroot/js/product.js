@@ -7,8 +7,7 @@ $(document).ready(function () {
 });
 
 function loadDataTable() {
-    dataTable = $('#tblData').DataTable({
-        scrollX: true,
+    dataTable = $('#tblData').DataTable({        
         "ajax": { url: '/admin/product/GetAll' },
         "columns": [
             { data: 'Title', "width": "25%" },
@@ -17,11 +16,11 @@ function loadDataTable() {
             { data: 'Author', "width": "15%" },
             { data: 'Category.Name', "width": "10%" },
             {
-                data: 'id',
+                data: 'Id',
                 "render": function (data) {
                     return `<div class="w-75 btn-group" role="group">
-                     <a href="/admin/product/upsert?id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>               
-                     <a href="/admin/product/delete?id=${data}" class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Delete</a>
+                     <a href="/admin/product/upsert?Id=${data}" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>               
+                     <a href="/admin/product/delete?Id=${data}" class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Delete</a>
                     </div>`
                 },
                 "width": "25%"

@@ -19,6 +19,10 @@ namespace BulkyBook.DataAccess.Data.ApplicationDbContext
         public DbSet<Product> Products { get; set; }
         public DbSet<Customer> Customers { get; set; }
 
+        public DbSet<Developer> Developers { get; set; }
+        public DbSet<Address> Addresses { get; set; }        
+        public DbSet<Project> Projects { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -9,15 +9,18 @@ namespace BulkyBook.Web.Areas.Customer.Controllers
     public class CustomerController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+
         public CustomerController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
+
         // GET: CustomerController
         public ActionResult Index()
         {
             List<Customer> objCustomerList = _unitOfWork.CustomerRepository.GetAll().ToList();
             return View(objCustomerList);
+            
         }
 
         // GET: CustomerController/Details/5

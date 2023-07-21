@@ -15,9 +15,7 @@ namespace BulkyBook.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class CategoryController : Controller
-    {
-        //private readonly ApplicationDbContext _db;
-        //public ICategoryRepository _categoryRepo;
+    {        
         private readonly IUnitOfWork _unitOfWork;
 
         public CategoryController(IUnitOfWork unitOfWork)

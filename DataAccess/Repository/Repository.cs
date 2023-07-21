@@ -64,6 +64,30 @@ namespace BulkyBook.DataAccess.Repository
         {
             dbSet.RemoveRange(entity);
         }
+        //https://codewithmukesh.com/blog/specification-pattern-in-aspnet-core/
+        public async Task<List<T>> GetAllAsync()
+        {
+            return await dbSet.ToListAsync();
+        }
+        public async Task<T> GetByIdAsync(int id)
+        {
+            return await dbSet.FindAsync();
+        }
+
+        public T GetById(int id)
+        {
+            return dbSet.Find(id);            
+        }
+
+        public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
+        {
+            return dbSet.Where(expression);
+        }
+
+        public void AddRange(IEnumerable<T> entities)
+        {
+            dbSet.AddRange(entities);
+        }
     }
 
 }
