@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BulkyBook.Models.Models;
 using BulkyBook.Models.Models.Customer;
+using BulkyBook.Models.Models.Identity;
 using BulkyBook.Models.Models.Product;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -26,7 +27,7 @@ namespace BulkyBook.DataAccess.Data.ApplicationDbContext
         public DbSet<Address> Addresses { get; set; }        
         public DbSet<Project> Projects { get; set; }
 
-
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
