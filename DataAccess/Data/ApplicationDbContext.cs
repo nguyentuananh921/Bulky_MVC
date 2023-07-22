@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using BulkyBook.Models.Models;
 using BulkyBook.Models.Models.Customer;
 using BulkyBook.Models.Models.Product;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BulkyBook.DataAccess.Data.ApplicationDbContext
 {
-    public class ApplicationDbContext :IdentityDbContext
+    public class ApplicationDbContext :IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext (DbContextOptions<ApplicationDbContext> options)
             : base(options)
