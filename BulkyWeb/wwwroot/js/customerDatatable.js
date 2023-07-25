@@ -8,7 +8,7 @@ $(document).ready(function () {
         "serverSide": true,
         "filter": true,
         "ajax": {
-            "url": "/api/customer",
+            "url": "/Customers/Customer/GetCustomersMukesh",
             "type": "GET",
             "datatype": "json"
         },
