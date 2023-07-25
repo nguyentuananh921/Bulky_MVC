@@ -12,9 +12,13 @@ using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models;
 using BulkyBook.Models.ViewModel;
 using BulkyBook.DataAccess.Data.ApplicationDbContext;
+using Microsoft.AspNetCore.Authorization;
+using Utility;
+
 namespace BulkyBook.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
